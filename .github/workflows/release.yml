@@ -28,21 +28,26 @@ jobs:
             'reduce .publishConfig as $in (.; . + $in) | del(.publishConfig)' \
             package.json > package.json~
           mv package.json~ package.json
-      - run: npm config set registry=https://registry.npmjs.org/
-      - run: npm config set //registry.npmjs.org/:_auth=$NPM_TOKEN
-        env:
-           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@mdrv'
+      # - run: npm config set registry=https://registry.npmjs.org/
+      # - run: npm config set //registry.npmjs.org/:_auth=$NPM_TOKEN
+        # env:
+        #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: 'Pack with Bun for NPM'
         run: bun pm pack --filename ./tmp.tgz
       - name: 'Publish to NPM: `sview`'
         if: ${{ !github.event.release.prerelease }}
         run: npm publish ./tmp.tgz --provenance --access public
-        # env:
-        #   NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
-        #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        env:
+          NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: 'Publish to NPM: `sview` (next)'
         if: ${{ github.event.release.prerelease }}
         run: npm publish ./tmp.tgz --provenance --access public --tag next
-        # env:
-        #   NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
-        #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        env:
+          NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
