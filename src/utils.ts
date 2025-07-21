@@ -360,7 +360,7 @@ export type AllParams<T extends Views> = Partial<
 	Record<ExtractParams<RecursiveKeys<T>>, string>
 >
 
-export type SViewApi<T extends Views> = {
+export type SVWApi<T extends Views> = {
 	/**
 	 * Construct a path while ensuring type safety.
 	 *
@@ -443,7 +443,7 @@ export type NavigateOptions = {
 	search?: string
 	state?: string
 	/**
-	 * Skip DOM manipulation via SView
+	 * Skip DOM manipulation via SVW
 	 */
 	bypass?: boolean
 	hooks?: boolean
@@ -506,7 +506,7 @@ export function validateViews(views: Views): void {
 		)
 		if (dynamicPath) {
 			console.warn(
-				`SView warning: Wildcard view \`${wildcardPath}\` should not be at the same level as dynamic view \`${dynamicPath}\`.`,
+				`SVW warning: Wildcard view \`${wildcardPath}\` should not be at the same level as dynamic view \`${dynamicPath}\`.`,
 			)
 		}
 	}

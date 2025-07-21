@@ -1,4 +1,4 @@
-<h1 align="center">SView ✈️ yeah</h1>
+<h1 align="center">✈️ SVW</h1>
 
 <p align="center"><b><i>(WIP) Svelte-powered SPA navigation with seamless and customizable hooks</i></b></p>
 

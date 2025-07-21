@@ -1,6 +1,6 @@
 import { tick } from 'svelte'
 
-import type { ComponentTree, Location, SViewApi, Views, NavigateOptions } from './utils'
+import type { ComponentTree, Location, SVWApi, Views, NavigateOptions } from './utils'
 import {
 	join,
 	updatedLocation,
@@ -85,7 +85,7 @@ export const getCompKeys: { in: string[]; out: string[] } = (
  * });
  * ```
  */
-export const createView: SViewApi = <T extends Views>(r: { views: T }) => {
+export const createView: SVWApi = <T extends Views>(r: { views: T }) => {
 	views = r.views
 
 	if (
@@ -185,7 +185,7 @@ export async function onNavigate(path?: string, options: NavigateOptions = {}): 
 	}
 
 	if (!views || Object.keys(views).length === 0)
-		throw 'SView is empty. You need to populate it.'
+		throw 'SVW is empty. You need to populate it.'
 	if (isRendering) throw 'Rendering is still in process'
 	// if (firstPage && views.layout) {
 	//     try {

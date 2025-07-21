@@ -1,10 +1,10 @@
 <!--
 @component
-The main SView component
+The main SVW component
 
 @example
 ```ts
-<SView/>
+<SVW/>
 ```
 -->
 
