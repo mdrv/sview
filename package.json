@@ -1,6 +1,6 @@
 {
 	"name": "sview",
-	"version": "257.0.0",
+	"version": "0.1.0",
 	"description": "(WIP) Svelte-powered SPA navigation with seamless and customizable hooks & view transition",
 	"keywords": [],
 	"homepage": "https://github.com/mdrv/sview",
