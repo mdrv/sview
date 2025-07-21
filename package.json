@@ -1,0 +1,43 @@
+{
+	"name": "sview",
+	"version": "0.1.0",
+	"description": "(WIP) Svelte-powered SPA navigation with seamless and customizable hooks & view transition",
+	"keywords": [],
+	"homepage": "https://github.com/mdrv/sview",
+	"bugs": {
+		"url": "https://github.com/mdrv/sview/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mdrv/sview.git"
+	},
+	"license": "GPL-3.0",
+	"author": "Umar Alfarouk <medrivia@gmail.com> (https://alfarouk.id)",
+	"type": "module",
+	"publishConfig": {
+		"main": "./dist/index.js",
+		"types": "./dist/index.d.ts",
+		"exports": {
+			".": {
+				"default": "./dist/index.js",
+				"types": "./dist/index.d.ts"
+			}
+		}
+	},
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"b": "tsdown",
+		"f": "dprint fmt",
+		"fc": "dprint check"
+	},
+	"files": ["dist"],
+	"peerDependencies": {
+		"svelte": "^5.36.12"
+	},
+	"devDependencies": {
+		"@sveltejs/vite-plugin-svelte": "^6.1.0",
+		"tsdown": "^0.12.9"
+	}
+}

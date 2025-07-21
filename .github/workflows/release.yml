@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@mdrv'
+      - run: bun i # install
+      - run: bun b # build
+      - name: Remove GitHub alerts from README.md for NPM
+        run: sed -i -r '/^>\s+\[!\w+\]/d' ./README.md # 
+      - name: 'Use `exports` from publishConfig'
+        run: |
+          jq \
+            'reduce .publishConfig as $in (.; . + $in) | del(.publishConfig)' \
+            package.json > package.json~
+          mv package.json~ package.json
+      - run: npm config set @mdrv:registry=https://registry.npmjs.org/
+      - run: npm config set _auth=$NPM_TOKEN
+        env:
+           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: 'Pack with Bun for NPM'
+        run: bun pm pack --filename ./tmp.tgz
+      - name: 'Publish to NPM: `sview`'
+        if: ${{ !github.event.release.prerelease }}
+        run: npm publish ./tmp.tgz --provenance --access public
+        # env:
+        #   NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
+        #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: 'Publish to NPM: `sview` (next)'
+        if: ${{ github.event.release.prerelease }}
+        run: npm publish ./tmp.tgz --provenance --access public --tag next
+        # env:
+        #   NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
+        #   NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
