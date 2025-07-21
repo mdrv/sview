@@ -28,7 +28,7 @@ jobs:
             'reduce .publishConfig as $in (.; . + $in) | del(.publishConfig)' \
             package.json > package.json~
           mv package.json~ package.json
-      - run: npm config set @mdrv:registry=https://registry.npmjs.org/
+      - run: npm config set registry=https://registry.npmjs.org/
       - run: npm config set //registry.npmjs.org/:_auth=$NPM_TOKEN
         env:
            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
