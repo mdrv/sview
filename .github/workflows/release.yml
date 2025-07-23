@@ -39,13 +39,13 @@ jobs:
         #    NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: 'Pack with Bun for NPM'
         run: bun pm pack --filename ./tmp.tgz
-      - name: 'Publish to NPM: `sview`'
+      - name: 'Publish to NPM: `svw`'
         if: ${{ !github.event.release.prerelease }}
         run: npm publish ./tmp.tgz --provenance --access public
         env:
           NPM_CONFIG_TOKEN: ${{secrets.NPM_TOKEN}}
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - name: 'Publish to NPM: `sview` (next)'
+      - name: 'Publish to NPM: `svw` (next)'
         if: ${{ github.event.release.prerelease }}
         run: npm publish ./tmp.tgz --provenance --access public --tag next
         env:
